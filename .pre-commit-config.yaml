@@ -1,12 +1,16 @@
 ---
 # yaml-language-server: $schema=https://json.schemastore.org/pre-commit-config.json
 fail_fast: false
-
 default_stages:
   - pre-commit
   - pre-push
 
 repos:
+  # checks pre-commit config for errors
+  - repo: meta
+    hooks:
+      - id: check-useless-excludes
+
   - repo: https://github.com/thlorenz/doctoc
     rev: v2.2.0
     hooks:
@@ -21,32 +25,35 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
-      - id: check-merge-conflict
       - id: check-added-large-files
-        args:
-          - --maxkb=100
+      - id: check-ast
+      - id: check-builtin-literals
       - id: check-case-conflict
+      - id: check-docstring-first
       - id: check-executables-have-shebangs
+      - id: check-illegal-windows-names
       - id: check-json
+      - id: check-merge-conflict
+      - id: check-shebang-scripts-are-executable
       - id: check-symlinks
+      - id: check-toml
+      - id: check-vcs-permalinks
       - id: check-xml
-      - id: detect-aws-credentials
+      - id: check-yaml
         args:
-          - --allow-missing-credentials
+          - --allow-multiple-documents
+      - id: debug-statements
+      - id: destroyed-symlinks
       - id: detect-private-key
       - id: end-of-file-fixer
       - id: fix-byte-order-marker
       - id: mixed-line-ending
-        args:
-          - --fix=auto
-      - id: trailing-whitespace
-        args:
-          - --markdown-linebreak-ext=md
+      - id: name-tests-test
       - id: no-commit-to-branch
-        args: ["--branch", "main"]
+      - id: trailing-whitespace
 
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.37.0
+    rev: v1.37.1
     hooks:
       - id: yamllint
         args:
@@ -60,14 +67,14 @@ repos:
       - id: remove-tabs
 
   - repo: https://github.com/sirosen/texthooks
-    rev: 0.6.8
+    rev: 0.7.1
     hooks:
       - id: fix-smartquotes
       - id: fix-ligatures
       - id: forbid-bidi-controls
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.44.0
+    rev: v0.47.0
     hooks:
       - id: markdownlint-fix
         args:
@@ -75,7 +82,7 @@ repos:
           - .markdownlint.yaml
 
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: v3.5.3
+    rev: v3.7.4
     hooks:
       - id: prettier
         args:
@@ -90,6 +97,6 @@ repos:
       - id: forbid-secrets
 
   - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.24.3
+    rev: v8.30.0
     hooks:
       - id: gitleaks
