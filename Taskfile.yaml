@@ -7,7 +7,7 @@ vars:
     sh: "git rev-parse --show-toplevel"
 
 includes:
-  pre-commit: .taskfiles/pre-commit.yaml
+  pre-commit: .taskfiles/pre-commit
 
 tasks:
   lint:
